@@ -9,7 +9,7 @@ export default function FirestoreContext(props) {
     const [clientes, setclientes] = useState([]);
 
     const getUsers = async () => {
-        const snap = await getDocs(collection(db, "users"))
+        const snap = await getDocs(collection(db, "clientes"))
         const lstUsers = []
         snap.forEach((i) => {
             lstUsers.push({ ...i.data(), id: i.id })
@@ -26,8 +26,8 @@ export default function FirestoreContext(props) {
             correo: c,
         })
     }
-    const updateClient = async (id, name, surname, addres, phone, emailAddres) => {
-        await updateDoc(doc(db, "users", id), {
+    const updateClient = async (id, n, a, d, t, c) => {
+        await updateDoc(doc(db, "clientes", id), {
             nombre: n,
             apellido: a,
             direccion: d,
@@ -36,9 +36,9 @@ export default function FirestoreContext(props) {
         })
     }
     const deleteClient = async(id)=> {
-        await deleteDoc(doc(db,"users",id))
+        await deleteDoc(doc(db,"clientes",id))
     }
     return (
-        <dbContext.Provider value={{ getUsers, addClient, updateClient, deleteClient }}>{children}</dbContext.Provider>
+        <dbContext.Provider value={{ lstClientes:clientes, getUsers, addClient, updateClient, deleteClient }}>{children}</dbContext.Provider>
     )
 }
